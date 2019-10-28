@@ -1,4 +1,6 @@
 
+# Write team member names here: 
+
 
 '''
 Base class file for Cache
@@ -58,7 +60,7 @@ class Cache:
     Do NOT change the function definition and arguments
     '''
 
-    def find_set(self, address):
+    def find_index(self, address):
         pass
 
     '''
