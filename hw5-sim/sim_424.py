@@ -6,9 +6,9 @@ Credit: R. Martin (W&M), A. Jog (W&M), Ramulator (CMU)
 
 CPU Trace Driven: This simulator directly reads instruction traces 
 from a file (stored in ../Traces), and simulates a simplified model 
-of a "core" that generates memory requests to the DRAM subsystem. Each line 
-in the trace file represents a memory request, and can have one of the following 
-two formats. 
+of a "core" that generates memory requests. Each line 
+in the trace file represents a memory request, and can have 
+one of the following two formats. 
 
 <num-cpuinst> <addr-read>: For a line with two tokens, the 
 first token represents the number of CPU (i.e., non-memory) instructions 
@@ -72,11 +72,11 @@ if __name__ == "__main__":
             if found==False:
                 cache.load(address)
 
-            # print('set and tag of', hex(address), 'is', cache.find_set(address), cache.find_tag(address))
-            # if found:
-            #     print('address', hex(address), 'CACHE HIT. Good Job.')
-            # else:
-            #     print('address', hex(address), 'CACHE MISS. Loading from memory.')
+            print('set and tag of', hex(address), 'is', cache.find_set(address), cache.find_tag(address))
+            if found:
+                print('address', hex(address), 'CACHE HIT. Good Job.')
+            else:
+                print('address', hex(address), 'CACHE MISS. Loading from memory.')
         
         load_requests = len(trace)
         misses = load_requests - cache.hit
@@ -88,5 +88,4 @@ if __name__ == "__main__":
         print('miss_rate', miss_rate)
         print('AMAT', amat)
         print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
-        #print('CPI_aj is', int((amat*load_requests + compute*avg_cpi_ideal)/(load_requests + compute) + miss_rate*cache.misspenalty))
         print('Finished processing your program trace, progress =', ((t+1) / len(trace)) * 100, '%')
