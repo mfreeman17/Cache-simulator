@@ -81,11 +81,15 @@ if __name__ == "__main__":
         load_requests = len(trace)
         misses = load_requests - cache.hit
         miss_rate = misses/load_requests 
-        amat = cache.hitlatency + miss_rate*cache.misspenalty
-        avg_cpi_ideal = 1.0
+        hit_rate = 1 - miss_rate
+        
+        #amat = cache.hitlatency + miss_rate*cache.misspenalty
+        #avg_cpi_ideal = 1.0
 
         print('total cache misses', misses)
         print('miss_rate', miss_rate)
-        print('AMAT', amat)
-        print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
+        print('hit_rate', 1 - miss_rate)
+
+        #print('AMAT', amat)
+        #print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
         print('Finished processing your program trace, progress =', ((t+1) / len(trace)) * 100, '%')
