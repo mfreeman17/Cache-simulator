@@ -72,7 +72,7 @@ if __name__ == "__main__":
             if found==False:
                 cache.load(address)
 
-            print('set and tag of', hex(address), 'is', cache.find_index(address), cache.find_tag(address))
+            print('set and tag of', hex(address), 'is', cache.find_set(address), cache.find_tag(address))
             if found:
                 print('address', hex(address), 'CACHE HIT. Good Job.')
             else:

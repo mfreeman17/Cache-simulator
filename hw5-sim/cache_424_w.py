@@ -60,7 +60,7 @@ class Cache:
     Do NOT change the function definition and arguments
     '''
 
-    def find_index(self, address):
+    def find_set(self, address):
         pass
 
     '''
