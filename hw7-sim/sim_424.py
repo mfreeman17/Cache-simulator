@@ -43,13 +43,13 @@ if __name__ == "__main__":
             files = os.listdir('../Traces/')
         else:
             files = [sys.argv[1]]
-        cacheSize = int(sys.argv[2])
+        cacheSize = int(sys.argv[2])*1024
         ways = int(sys.argv[3])
         block_size = int(sys.argv[4])
         trace_elements = int(sys.argv[5])
 
     except:
-        print('main.py trace cacheSize(Bytes) #ofWays blockSize(Bytes) trace_elements')
+        print('main.py trace cacheSize(KB) #ofWays blockSize(Bytes) trace_elements')
 
     cache = Cache(cacheSize, ways, block_size)
     cache.reset()
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
         for t in range(trace_elements):
             if t % 1000 == 0:
-                print('Processing your program trace, progress so far =', int(t / len(trace) * 100), '%')
+                print('Processing your program trace, progress so far =', int(t / trace_elements * 100), '%')
             compute += int(trace[t].split(' ')[0])
             address = int(trace[t].split(' ')[1])
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
             else:
                 print('address', hex(address), 'CACHE MISS. Loading from memory.')
         
-        load_requests = len(trace)
+        load_requests = trace_elements
         misses = load_requests - cache.hit
         miss_rate = misses/load_requests 
         hit_rate = 1 - miss_rate
@@ -102,4 +102,4 @@ if __name__ == "__main__":
 
         #print('AMAT', amat)
         #print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
-        print('Finished processing your program trace, progress =', ((t+1) / len(trace)) * 100, '%')
+        print('Finished processing your program trace, progress =', ((t+1) / trace_elements) * 100, '%')
