@@ -99,6 +99,7 @@ if __name__ == "__main__":
         print('total cache misses', misses)
         print('miss_rate', miss_rate)
         print('hit_rate', 1 - miss_rate)
+        print('mpki', misses*1000/(compute+load_requests))
 
         #print('AMAT', amat)
         #print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
