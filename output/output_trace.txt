@@ -1,3 +1,38 @@
+(base) MacBook-Pro:hw5-sim adwait$ python sim_424.py hw6.trace 64 2 8
+hw6.trace
+Processing your program trace, progress so far = 0 %
+set and tag of 0x4 is 0 0
+address 0x4 CACHE MISS. Loading from memory.
+set and tag of 0x48 is 1 2
+address 0x48 CACHE MISS. Loading from memory.
+set and tag of 0x8 is 1 0
+address 0x8 CACHE MISS. Loading from memory.
+set and tag of 0xc is 1 0
+address 0xc CACHE HIT. Good Job.
+set and tag of 0x10 is 2 0
+address 0x10 CACHE MISS. Loading from memory.
+set and tag of 0x50 is 2 2
+address 0x50 CACHE MISS. Loading from memory.
+set and tag of 0x14 is 2 0
+address 0x14 CACHE HIT. Good Job.
+set and tag of 0x54 is 2 2
+address 0x54 CACHE HIT. Good Job.
+set and tag of 0x84 is 0 4
+address 0x84 CACHE MISS. Loading from memory.
+set and tag of 0x88 is 1 4
+address 0x88 CACHE MISS. Loading from memory.
+set and tag of 0x4 is 0 0
+address 0x4 CACHE HIT. Good Job.
+set and tag of 0x10 is 2 0
+address 0x10 CACHE HIT. Good Job.
+total cache misses 7
+miss_rate 0.5833333333333334
+hit_rate 0.41666666666666663
+Finished processing your program trace, progress = 100.0 %
+
+
+
+
 (base) MacBook-Pro:hw5-sim adwait$ python sim_424.py hw5_a.trace 64 1 4
 hw5_a.trace
 Processing your program trace, progress so far = 0 %
