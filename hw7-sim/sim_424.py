@@ -92,15 +92,17 @@ if __name__ == "__main__":
         miss_rate = misses/load_requests 
         hit_rate = 1 - miss_rate
 
-        #amat = cache.hitlatency + miss_rate*cache.misspenalty
-        #avg_cpi_ideal = 1.0
+        amat = cache.hitlatency + miss_rate*cache.misspenalty
+        avg_cpi_ideal = 1.0
 
         print('total cache accesses', load_requests)
         print('total cache misses', misses)
+        print('total cache hits', (load_requests - misses))
         print('miss_rate', miss_rate)
         print('hit_rate', 1 - miss_rate)
         print('mpki', misses*1000/(compute+load_requests))
 
-        #print('AMAT', amat)
-        #print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
-        print('Finished processing your program trace, progress =', ((t+1) / trace_elements) * 100, '%')
+        print('AMAT', amat)
+        print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
+        print('Finished processing the specified part of the program trace, progress =', ((t+1) / trace_elements) * 100, '%')
+        print('Percentage of the entire program trace executed =', ((t+1) / len(trace)) * 100, '%')
