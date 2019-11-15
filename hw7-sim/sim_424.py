@@ -25,7 +25,7 @@ This simulator does not consider the third token at all and we
 will ignore it for our assignments.
 
 Example command line:
-python sim_424.py 403.gcc.gz 16 1 8
+python sim_424.py 403.gcc.gz 16384 16 128 1000
 '''
 
 from math import log2
@@ -43,13 +43,13 @@ if __name__ == "__main__":
             files = os.listdir('../Traces/')
         else:
             files = [sys.argv[1]]
-        cacheSize = int(sys.argv[2])*1024
+        cacheSize = int(sys.argv[2])
         ways = int(sys.argv[3])
         block_size = int(sys.argv[4])
         trace_elements = int(sys.argv[5])
 
     except:
-        print('main.py trace cacheSize(KB) #ofWays blockSize(Bytes) trace_elements')
+        print('main.py trace cacheSize(Bytes) #ofWays blockSize(Bytes) trace_elements')
 
     cache = Cache(cacheSize, ways, block_size)
     cache.reset()
