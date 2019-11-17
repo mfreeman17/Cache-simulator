@@ -18,7 +18,7 @@ class Cache:
         self.cacheSize = cSize  # Bytes
         self.ways = ways        # Default: 1 way (i.e., directly mapped)
         self.blockSize = bSize  # Default: 4 bytes (i.e., 1 word block)
-        self.setSize = cSize // bSize // ways
+        self.sets = cSize // bSize // ways
 
         self.blockBits = 0
         self.setBits = 0
@@ -26,13 +26,13 @@ class Cache:
         if (self.blockSize != 1):
             self.blockBits = int(log2(self.blockSize))
 
-        if (self.setSize != 1):
-            self.setBits = int(log2(self.setSize))
+        if (self.sets != 1):
+            self.setBits = int(log2(self.sets))
 
-        self.cache = np.zeros((self.setSize, self.ways, self.blockSize), dtype=int)
+        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=int)
         self.cache = self.cache - 1
 
-        self.metaCache = np.zeros((self.setSize, self.ways), dtype=int)
+        self.metaCache = np.zeros((self.sets, self.ways), dtype=int)
         self.metaCache = self.metaCache - 1
 
         self.hit = 0
@@ -41,10 +41,10 @@ class Cache:
         self.misspenalty = 10 # cycle
 
     def reset(self):
-        self.cache = np.zeros((self.setSize, self.ways, self.blockSize), dtype=int)
+        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=int)
         self.cache = self.cache - 1
 
-        self.metaCache = np.zeros((self.setSize, self.ways), dtype=int)
+        self.metaCache = np.zeros((self.sets, self.ways), dtype=int)
         self.metaCache = self.metaCache - 1
 
         self.hit = 0
