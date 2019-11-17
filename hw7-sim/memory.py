@@ -1,6 +1,6 @@
 
 '''
-Base class file for Cache
+Base class file for Memory (DRAM)
 Credit: A. Jog (W&M), Ramulator (CMU)
 '''
 
