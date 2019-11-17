@@ -1,7 +1,4 @@
 
-# Write team member names here: 
-
-
 '''
 Base class file for Cache
 Credit: R. Martin (W&M), A. Jog (W&M), Ramulator (CMU)
@@ -11,7 +8,6 @@ import numpy as np
 from math import log2
 import random
 
-
 class Cache:
     def __init__(self, cSize, ways=1, bSize=4):
         
@@ -20,7 +16,7 @@ class Cache:
         self.blockSize = bSize  # Default: 4 bytes (i.e., 1 word block)
         self.sets = cSize // bSize // ways
 
-        self.blockBits = 0
+        self.blockBits = 0  # blockBits is the sum of byte offset bits (always 2 bits as one word has 4 bytes) and block offset bits
         self.setBits = 0
 
         if (self.blockSize != 1):
@@ -37,8 +33,7 @@ class Cache:
 
         self.hit = 0
         self.miss = 0
-        self.hitlatency = 1 # cycle
-        self.misspenalty = 10 # cycle
+        self.hitlatency = 5 # cycle
 
     def reset(self):
         self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=int)
@@ -51,13 +46,12 @@ class Cache:
         self.miss = 0
         
     '''
-    Warning: DO NOT EDIT ANYTHING BEFORE THIS LINE
+    Warning: DO NOT EDIT Anything Above
     '''
 
 
     '''
     Returns the set number of an address based on the policy discussed in the class
-    Do NOT change the function definition and arguments
     '''
 
     def find_set(self, address):
@@ -65,7 +59,6 @@ class Cache:
 
     '''
     Returns the tag of an address based on the policy discussed in the class
-    Do NOT change the function definition and arguments
     '''
     
     def find_tag(self, address):
@@ -75,7 +68,6 @@ class Cache:
     Search through cache for address
     return True if found
     otherwise False
-    Do NOT change the function definition and arguments
     '''
 
     def find(self, address):
@@ -84,9 +76,7 @@ class Cache:
     '''
     Load data into the cache. 
     Something might need to be evicted from the cache and send back to memory
-    Do NOT change the function definition and arguments
     '''
    
     def load(self, address):
         pass
-

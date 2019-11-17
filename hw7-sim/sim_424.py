@@ -35,6 +35,7 @@ import os
 import gzip
 import numpy as np
 from cache_424_w import Cache
+from memory import Memory
 
 if __name__ == "__main__":
 
@@ -49,16 +50,19 @@ if __name__ == "__main__":
         trace_elements = int(sys.argv[5])
 
     except:
-        print('main.py trace cacheSize(Bytes) #ofWays blockSize(Bytes) trace_elements')
+        print('sim_424.py trace cacheSize(Bytes) #ofWays blockSize(Bytes) trace_elements')
 
     cache = Cache(cacheSize, ways, block_size)
+    memory = Memory(2048)
     cache.reset()
 
     for file in files:
-        print(format(file).split('.')[-1])
+        print('python sim_424.py', format(file), cacheSize, ways, block_size, trace_elements, '\n')
 
         cache.reset()
         compute = 0
+        misspenalty = 0
+        rowhits = 0
 
         if format(file).split('.')[-1] == "gz":
             with gzip.open('../Traces/{}'.format(file),'rt') as f:
@@ -68,7 +72,8 @@ if __name__ == "__main__":
         else:
             with open('../Traces/{}'.format(file)) as f:
                 trace = f.readlines()
-                trace_elements = len(trace)
+                if (trace_elements > len(trace)):
+                    trace_elements = len(trace)
 
         for t in range(trace_elements):
             if t % 1000 == 0:
@@ -78,6 +83,7 @@ if __name__ == "__main__":
 
 
             found = cache.find(address)
+
             if found==False:
                 cache.load(address)
 
@@ -85,24 +91,35 @@ if __name__ == "__main__":
             if found:
                 print('address', hex(address), 'CACHE HIT. Good Job.')
             else:
-                print('address', hex(address), 'CACHE MISS. Loading from memory.')
+                if (memory.is_row_hit(address)):
+                    misspenalty += memory.determine_miss_penalty(address)
+                    rowhits += 1
+                    print('address', hex(address), 'CACHE MISS. Loading from memory... it is a ROW BUFFER HIT')
+                else:
+                    misspenalty += memory.determine_miss_penalty(address)
+                    print('address', hex(address), 'CACHE MISS. Loading from memory... it is a ROW BUFFER MISS (will take more time to load from memory)')
         
         load_requests = trace_elements
         misses = load_requests - cache.hit
         miss_rate = misses/load_requests 
         hit_rate = 1 - miss_rate
-
-        amat = cache.hitlatency + miss_rate*cache.misspenalty
-        avg_cpi_ideal = 1.0
+        avg_misspenalty = misspenalty/misses
 
         print('total cache accesses', load_requests)
         print('total cache misses', misses)
         print('total cache hits', (load_requests - misses))
         print('miss_rate', miss_rate)
         print('hit_rate', 1 - miss_rate)
-        print('mpki', misses*1000/(compute+load_requests))
+
+        if (misses!=0):
+            print('Row Buffer Hit Rate', rowhits/misses)
+            print('Average Miss Penalty', avg_misspenalty)
+
+        amat = cache.hitlatency + miss_rate*avg_misspenalty
+        avg_cpi_ideal = 1.0
 
         print('AMAT', amat)
-        print('CPI_stall', int((avg_cpi_ideal + miss_rate*cache.misspenalty + (load_requests*miss_rate*cache.misspenalty)/(load_requests + compute))))
+        print('CPI_stall', int((avg_cpi_ideal + miss_rate*avg_misspenalty + (load_requests*miss_rate*avg_misspenalty)/(load_requests + compute))))
         print('Finished processing the specified part of the program trace, progress =', ((t+1) / trace_elements) * 100, '%')
-        print('Percentage of the entire program trace executed =', ((t+1) / len(trace)) * 100, '%')
+        print('Percentage of the entire program trace executed =', ((t+1) / len(trace)) * 100, '%', '\n')
+        print('=====================================')
