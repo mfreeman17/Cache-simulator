@@ -25,10 +25,10 @@ class Cache:
         if (self.sets != 1):
             self.setBits = int(log2(self.sets))
 
-        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=int)
+        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=np.int64)
         self.cache = self.cache - 1
 
-        self.metaCache = np.zeros((self.sets, self.ways), dtype=int)
+        self.metaCache = np.zeros((self.sets, self.ways), dtype=np.int64)
         self.metaCache = self.metaCache - 1
 
         self.hit = 0
@@ -36,10 +36,10 @@ class Cache:
         self.hitlatency = 5 # cycle
 
     def reset(self):
-        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=int)
+        self.cache = np.zeros((self.sets, self.ways, self.blockSize), dtype=np.int64)
         self.cache = self.cache - 1
 
-        self.metaCache = np.zeros((self.sets, self.ways), dtype=int)
+        self.metaCache = np.zeros((self.sets, self.ways), dtype=np.int64)
         self.metaCache = self.metaCache - 1
 
         self.hit = 0
