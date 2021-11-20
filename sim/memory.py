@@ -1,4 +1,4 @@
-
+# Matthew Freeman
 '''
 Base class file for Memory (DRAM)
 Credit: A. Jog (W&M), Ramulator (CMU)
@@ -25,7 +25,7 @@ class Memory:
 
 
     def find_row_number(self, address):
-        return (address >> self.rowBits) 
+        return (address >> self.rowBits)
 
 
     def is_row_hit(self, address):
@@ -36,4 +36,8 @@ class Memory:
     '''
 
     def determine_miss_penalty(self, address):
-        pass
+        if (self.is_row_hit(address)==True):
+            return self.rowhitlatency
+        else:
+            self.set_open_row(self.find_row_number(address))
+            return self.rowmisslatency
