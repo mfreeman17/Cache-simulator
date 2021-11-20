@@ -1,8 +1,5 @@
 # Matthew Freeman
-'''
-Base class file for Memory (DRAM)
-Credit: A. Jog (W&M), Ramulator (CMU)
-'''
+
 
 import numpy as np
 from math import log2
@@ -31,10 +28,7 @@ class Memory:
     def is_row_hit(self, address):
         return (self.find_row_number(address) == self.get_open_row())
 
-    '''
-    Warning: DO NOT EDIT Anything Above
-    '''
-
+  
     def determine_miss_penalty(self, address):
         if (self.is_row_hit(address)==True):
             return self.rowhitlatency
